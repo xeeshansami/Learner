@@ -5,17 +5,34 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
+
 
 public class cLog {
-    public static void Logs(Context context,String msg,Boolean isAlertDiaglogBoxShow){
-        Log.e("ExceptionError"," "+context.getClass().getSimpleName()+" = "+msg);
-        if(isAlertDiaglogBoxShow){
-            showDialogBox(msg,context);
+    public static void Logs(Context context, String error, boolean isNoException, boolean isAlertBoxDialogBox, boolean isSnackBar) {
+        //Todo: if there is no exception no alertbox show
+        if (!isSnackBar && !isAlertBoxDialogBox && isNoException) {
+            Log.d("ErrorException", " " + context.getClass().getSimpleName() + " = " +error);
+        } else if (isAlertBoxDialogBox && !isNoException) {
+            //Todo: if there is an exception & alertbox show
+            Log.e("ErrorException", " " + context.getClass().getSimpleName() + " = " + error);
+            showDialogBox(error, context);
+        } else if (isSnackBar && !isNoException) {
+            //Todo: if there is an exception & snackBar show
+            Log.e("ErrorException", " " + context.getClass().getSimpleName() + " = " + error);
+            showSnackBar(error, context);
+        } else {
+            //Todo: if there is an exception & only Log cat Show
+            Log.e("ErrorException", " " + context.getClass().getSimpleName() + " = " + error);
         }
     }
 
-    private static void showDialogBox(String msg,Context context) {
+    private static void showSnackBar(String msg, Context context) {
+        Snackbar.make(((Activity) context).findViewById(android.R.id.content), msg + "\n" + " Something went worng, Please try again later", 5000).show();
+    }
+
+    private static void showDialogBox(String msg, Context context) {
         new AlertDialog.Builder(context)
                 .setCancelable(false)
                 .setTitle("Error")
@@ -39,5 +56,4 @@ public class cLog {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-
 }

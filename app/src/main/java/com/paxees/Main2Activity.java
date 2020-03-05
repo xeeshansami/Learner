@@ -19,10 +19,12 @@ public class Main2Activity extends AppCompatActivity implements ResponseListner,
         implementationClass.isCheck("zeeshan","");
         sumUpClass=new SumUpClass(this,Main2Activity.this);
         try {
-            sumUpClass.setValue(2, Integer.valueOf(""));
-            sumUpClass.printMyValue("zbrdst");
+            for(int i=0;i<5;i++) {
+                sumUpClass.setValue(2, Integer.valueOf(i--));
+                sumUpClass.printMyValue("zbrdst");
+            }
         }catch (Exception e){
-            cLog.Logs(this,e.getMessage(),true);
+            cLog.Logs(this,e.getMessage(),false,true,false);
         }
     }
 
